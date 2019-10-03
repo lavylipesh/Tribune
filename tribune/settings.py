@@ -50,7 +50,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n08agc56g+hm3lnll!7#d53v5h%_-2rg4g-7l9ul40uuxm(2y6'
+SECRET_KEY = config('SECRET_KEY')
 
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=Csv())
@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'tribune.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+DATABASES['default'].update(db_from_env)                                                                                                                                                                                                                                                                                                                                                                
 
 
 # Password validation
@@ -158,4 +158,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+django_heroku.settings(locals())
 
