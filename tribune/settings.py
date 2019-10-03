@@ -15,17 +15,18 @@ import django_heroku
 import dj_database_url
 from decouple import config,Csv
 
-MODE=config("MODE",default=False,cast=bool)
-SECRET-KEY = config('cho87333673ee5nk97998%$@')
+MODE=config("MODE",default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG',default = False,cast=bool)
 
-#development
+
 if config('MODE')=="dev":
     DATABASES = {
         'default':{
            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-           'NAME': config('tribune'),
-           'USER': config('lilibeth'),
-           'PASSWORD': config('1234'),
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
            'HOST': config('DB_HOST'),
            'PORT': '',
         }
@@ -38,10 +39,7 @@ else:
             default = config('DATABASE_URL')
         )
     }
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
-    ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+   
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -57,7 +55,7 @@ SECRET_KEY = 'n08agc56g+hm3lnll!7#d53v5h%_-2rg4g-7l9ul40uuxm(2y6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,7 +72,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     
 ]
 
@@ -163,17 +162,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,"static"),
 ]
-STATICFILES_ STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-djSECRET_KEY='cho87333673ee5nk97998%$@'
-DEBUG=True #set to false in production
-DB_NAME='tribune'
-DB_USER='lilibeth'
-DB_PASSWORD='1234'
-DB_HOST='127.0.0.1'
-MODE='dev' #set to 'prod' in production
-ALLOWED_HOSTS='.localhost', '.herokuapp.com', '.127.0.0.1'
-ango_heroku.settings(locals())
