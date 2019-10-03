@@ -52,10 +52,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n08agc56g+hm3lnll!7#d53v5h%_-2rg4g-7l9ul40uuxm(2y6'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=Csv())
 
 
 # Application definition
@@ -109,14 +107,8 @@ WSGI_APPLICATION = 'tribune.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tribune',
-        'USER':'lilibeth',
-        'PASSWORD':'1234',
-    }
-}
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
